@@ -105,9 +105,10 @@ data-availability/
     ├── synthetic-performance-data.csv    # Main dataset (1,801 rows)
     ├── generate-synthetic-data.js        # Data generator script
     └── generation-stats.log              # Statistical validation
+```
 
 ## 🔒 Security & Compliance
-All data provided in this repository is **synthetic**. [cite_start]Original production metrics and source code are withheld to maintain **PCI-DSS compliance** and corporate security standards[cite: 201, 206].
+All data provided in this repository is **synthetic**. Original production metrics and source code are withheld to maintain **PCI-DSS compliance** and corporate security standards.
 
 ## 🎓 Citation
 If you use this data or framework in your research, please cite:
