@@ -1,0 +1,244 @@
+# Google Cloud Run Service Configuration Template
+# Based on: "Modernization of Enterprise Payment Infrastructure: A Case Study on LLM-Assisted Migration of Legacy Distributed Systems"
+# Research Paper reference: Cloud Run deployment configuration (Section 2.3)
+#
+# USAGE:
+# 1. Replace [PROJECT_ID] with your GCP project ID
+# 2. Replace [SERVICE_ACCOUNT] with your service account email
+# 3. Deploy: gcloud run services replace cloud-run.yaml
+
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: pay-portal-prod
+  labels:
+    app: payment-portal
+    environment: production
+    managed-by: terraform
+  annotations:
+    # Allow all traffic (authentication handled by IAP)
+    run.googleapis.com/ingress: all
+    run.googleapis.com/ingress-status: all
+    # Custom domain mapping
+    run.googleapis.com/custom-audiences: https://pay.example.com
+spec:
+  template:
+    metadata:
+      annotations:
+        # Execution environment (gen2 recommended for better performance)
+        run.googleapis.com/execution-environment: gen2
+        
+        # CPU allocation (always allocated, not throttled)
+        # Research Paper reference: "Payment processing can't tolerate CPU throttling"
+        run.googleapis.com/cpu-throttling: "false"
+        
+        # Resource limits
+        # Research Paper reference: Performance optimization
+        run.googleapis.com/memory: "2Gi"
+        run.googleapis.com/cpu: "1"
+        
+        # Auto-scaling configuration
+        # Research Paper reference: "Minimum instances to handle payment processing latency"
+        autoscaling.knative.dev/minScale: "2"
+        autoscaling.knative.dev/maxScale: "100"
+        
+        # Startup CPU boost (helps with cold starts)
+        run.googleapis.com/startup-cpu-boost: "true"
+        
+        # VPC connector for database access
+        run.googleapis.com/vpc-access-connector: projects/[PROJECT_ID]/locations/us-central1/connectors/pay-vpc-connector
+        run.googleapis.com/vpc-access-egress: private-ranges-only
+        
+    spec:
+      # Container concurrency (80 requests per instance)
+      containerConcurrency: 80
+      
+      # Request timeout (5 minutes for payment processing)
+      # Research Paper reference: "Payment pages need adequate timeout"
+      timeoutSeconds: 300
+      
+      # Service account with minimal permissions
+      serviceAccountName: [SERVICE_ACCOUNT]@[PROJECT_ID].iam.gserviceaccount.com
+      
+      containers:
+      - name: payment-portal
+        # Container image (built by GitLab CI/CD)
+        image: gcr.io/[PROJECT_ID]/pay-portal:latest
+        
+        ports:
+        - name: http1
+          containerPort: 3333
+        
+        # Environment variables
+        env:
+        # Application settings
+        - name: NODE_ENV
+          value: "production"
+        - name: APP_URL
+          value: "https://pay.example.com"
+        - name: PORT
+          value: "3333"
+        
+        # Session configuration
+        - name: SESSION_DRIVER
+          value: "redis"
+        - name: SESSION_TIMEOUT_MINUTES
+          value: "30"
+        
+        # Feature flags
+        - name: FEATURE_CUSTOMER_BALANCE_CHECK
+          value: "true"
+        - name: FEATURE_IMPERSONATION
+          value: "true"
+        
+        # GCP monitoring
+        - name: GCP_PROJECT_ID
+          value: "[PROJECT_ID]"
+        - name: GCP_TRACE_ENABLED
+          value: "true"
+        
+        # Secrets from Secret Manager
+        # Research Paper reference: Security implementation (Section 2.4)
+        - name: SESSION_ENCRYPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: epay-secrets
+              key: session-encryption-key
+        
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: epay-secrets
+              key: db-password
+        
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: epay-secrets
+              key: redis-password
+        
+        - name: CHASE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: epay-secrets
+              key: chase-api-key
+        
+        - name: PCIPAL_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: epay-secrets
+              key: pcipal-api-key
+        
+        # Resource allocation
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+        
+        # Health checks
+        # Research Paper reference: Monitoring strategy (Appendix A)
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 3333
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        
+        readinessProbe:
+          httpGet:
+            path: /api/ready
+            port: 3333
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 2
+        
+        startupProbe:
+          httpGet:
+            path: /api/health
+            port: 3333
+          initialDelaySeconds: 0
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 12
+  
+  traffic:
+  # Send 100% traffic to latest revision
+  - latestRevision: true
+    percent: 100
+
+---
+# Disaster Recovery Configuration (Secondary Region)
+# Research Paper reference: Disaster recovery strategy (Figure 4)
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: pay-portal-dr-us-east1
+  labels:
+    app: payment-portal
+    environment: disaster-recovery
+    region: us-east1
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/cpu-throttling: "false"
+        run.googleapis.com/memory: "2Gi"
+        run.googleapis.com/cpu: "1"
+        # DR regions scale to zero when not needed
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "50"
+    spec:
+      containerConcurrency: 80
+      timeoutSeconds: 300
+      serviceAccountName: [SERVICE_ACCOUNT]@[PROJECT_ID].iam.gserviceaccount.com
+      containers:
+      - name: payment-portal
+        image: gcr.io/[PROJECT_ID]/pay-portal:latest
+        ports:
+        - containerPort: 3333
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: REGION
+          value: "disaster-recovery"
+        # Same environment variables and secrets as primary region
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+  traffic:
+  - latestRevision: true
+    percent: 100
+
+---
+# Notes for deployment:
+# 
+# 1. Create VPC connector first:
+#    gcloud compute networks vpc-access connectors create pay-vpc-connector \
+#      --region=us-central1 \
+#      --subnet=pay-subnet \
+#      --subnet-project=[PROJECT_ID]
+#
+# 2. Create secrets in Secret Manager:
+#    gcloud secrets create epay-secrets --data-file=secrets.json
+#
+# 3. Grant service account access:
+#    gcloud projects add-iam-policy-binding [PROJECT_ID] \
+#      --member="serviceAccount:[SERVICE_ACCOUNT]@[PROJECT_ID].iam.gserviceaccount.com" \
+#      --role="roles/secretmanager.secretAccessor"
+#
+# 4. Deploy this configuration:
+#    gcloud run services replace cloud-run.yaml --region=us-central1
+#
+# 5. Configure load balancer for multi-region deployment:
+#    See Research Paper Appendix B for global load balancer configuration

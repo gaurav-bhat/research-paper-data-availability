@@ -1,0 +1,192 @@
+Generating synthetic performance data...
+Research Paper reference: "Modernization of Enterprise Payment Infrastructure: A Case Study on LLM-Assisted Migration of Legacy Distributed Systems"
+
+Generated 1800 measurements
+
+Statistical Properties:
+{
+  "api_customer_balance_legacy": {
+    "count": 100,
+    "mean": 2369,
+    "stdDev": 450,
+    "median": 2339,
+    "min": 1529,
+    "max": 3662,
+    "p95": 3271,
+    "p99": 3662
+  },
+  "page_load_payment_details_modern": {
+    "count": 100,
+    "mean": 1926,
+    "stdDev": 295,
+    "median": 1914,
+    "min": 1341,
+    "max": 2793,
+    "p95": 2493,
+    "p99": 2793
+  },
+  "page_load_confirmation_modern": {
+    "count": 100,
+    "mean": 1403,
+    "stdDev": 233,
+    "median": 1419,
+    "min": 929,
+    "max": 2128,
+    "p95": 1748,
+    "p99": 2128
+  },
+  "complete_payment_workflow_modern": {
+    "count": 100,
+    "mean": 3280,
+    "stdDev": 539,
+    "median": 3286,
+    "min": 2153,
+    "max": 4322,
+    "p95": 4220,
+    "p99": 4322
+  },
+  "payment_processor_pcipal_modern": {
+    "count": 100,
+    "mean": 2016,
+    "stdDev": 435,
+    "median": 2045,
+    "min": 1174,
+    "max": 3270,
+    "p95": 2745,
+    "p99": 3270
+  },
+  "page_load_contact_info_legacy": {
+    "count": 100,
+    "mean": 4343,
+    "stdDev": 706,
+    "median": 4377,
+    "min": 2860,
+    "max": 6072,
+    "p95": 5489,
+    "p99": 6072
+  },
+  "page_load_payment_details_legacy": {
+    "count": 100,
+    "mean": 4534,
+    "stdDev": 827,
+    "median": 4443,
+    "min": 3036,
+    "max": 6633,
+    "p95": 6414,
+    "p99": 6633
+  },
+  "page_load_payment_info_modern": {
+    "count": 100,
+    "mean": 1647,
+    "stdDev": 253,
+    "median": 1607,
+    "min": 1130,
+    "max": 2329,
+    "p95": 2080,
+    "p99": 2329
+  },
+  "page_load_payment_info_legacy": {
+    "count": 100,
+    "mean": 3906,
+    "stdDev": 659,
+    "median": 3854,
+    "min": 2530,
+    "max": 5459,
+    "p95": 4962,
+    "p99": 5459
+  },
+  "api_customer_balance_modern": {
+    "count": 100,
+    "mean": 181,
+    "stdDev": 44,
+    "median": 178,
+    "min": 96,
+    "max": 297,
+    "p95": 273,
+    "p99": 297
+  },
+  "complete_payment_workflow_legacy": {
+    "count": 100,
+    "mean": 6561,
+    "stdDev": 1170,
+    "median": 6601,
+    "min": 4522,
+    "max": 9924,
+    "p95": 8768,
+    "p99": 9924
+  },
+  "api_session_extend_modern": {
+    "count": 100,
+    "mean": 88,
+    "stdDev": 21,
+    "median": 85,
+    "min": 48,
+    "max": 138,
+    "p95": 131,
+    "p99": 138
+  },
+  "api_submit_contact_modern": {
+    "count": 100,
+    "mean": 325,
+    "stdDev": 74,
+    "median": 315,
+    "min": 187,
+    "max": 520,
+    "p95": 466,
+    "p99": 520
+  },
+  "api_submit_payment_info_modern": {
+    "count": 100,
+    "mean": 428,
+    "stdDev": 87,
+    "median": 428,
+    "min": 220,
+    "max": 738,
+    "p95": 571,
+    "p99": 738
+  },
+  "page_load_confirmation_legacy": {
+    "count": 100,
+    "mean": 3219,
+    "stdDev": 532,
+    "median": 3216,
+    "min": 2142,
+    "max": 4631,
+    "p95": 4126,
+    "p99": 4631
+  },
+  "payment_processor_chase_modern": {
+    "count": 100,
+    "mean": 1933,
+    "stdDev": 383,
+    "median": 1928,
+    "min": 1247,
+    "max": 2816,
+    "p95": 2689,
+    "p99": 2816
+  },
+  "health_check_modern": {
+    "count": 100,
+    "mean": 42,
+    "stdDev": 11,
+    "median": 43,
+    "min": 19,
+    "max": 78,
+    "p95": 59,
+    "p99": 78
+  },
+  "page_load_contact_info_modern": {
+    "count": 100,
+    "mean": 1873,
+    "stdDev": 284,
+    "median": 1872,
+    "min": 1276,
+    "max": 2752,
+    "p95": 2326,
+    "p99": 2752
+  }
+}
+
+CSV data written to stdout
+---
+

@@ -1,0 +1,250 @@
+# Artillery.io Configuration for Payment Portal Performance Testing
+# Based on: "Modernization of Enterprise Payment Infrastructure: A Case Study on LLM-Assisted Migration of Legacy Distributed Systems"
+# Research Paper reference: Evaluation methodology (Chapter 6)
+#
+# INSTALLATION:
+# npm install -g artillery
+#
+# USAGE:
+# artillery run payment-workflow.artillery.yml
+# artillery run payment-workflow.artillery.yml --output report.json
+# artillery report report.json
+
+config:
+  target: "https://pay-staging.example.com"
+  
+  # Load phases (simulating realistic traffic patterns)
+  # Research Paper reference: "50 concurrent users with realistic payment workflows"
+  phases:
+    # Phase 1: Warm-up (5 minutes)
+    - duration: 300
+      arrivalRate: 5
+      name: "Warm-up phase"
+    
+    # Phase 2: Normal load (10 minutes)
+    - duration: 600
+      arrivalRate: 10
+      name: "Sustained load"
+    
+    # Phase 3: Peak load (10 minutes)
+    - duration: 600
+      arrivalRate: 20
+      name: "Peak traffic"
+    
+    # Phase 4: Sustained peak (5 minutes)
+    - duration: 300
+      arrivalRate: 50
+      name: "Maximum concurrent users"
+  
+  # HTTP settings
+  http:
+    timeout: 30
+    pool: 50
+  
+  # Performance thresholds
+  # Research Paper reference: Performance targets (Chapter 5)
+  ensure:
+    maxErrorRate: 1  # Less than 1% errors
+    p95: 2000        # 95th percentile under 2 seconds
+    p99: 3000        # 99th percentile under 3 seconds
+  
+  # Plugins for enhanced metrics
+  plugins:
+    metrics-by-endpoint:
+      stripQueryString: true
+  
+  # Variables for dynamic test data
+  variables:
+    currencies:
+      - "USD"
+      - "GBP"
+      - "EUR"
+      - "CAD"
+    
+  # Custom processor for complex scenarios
+  processor: "./payment-processor.js"
+
+# Test Scenarios
+scenarios:
+  # Scenario 1: Complete Payment Workflow (Main scenario - 70% of traffic)
+  # Research Paper reference: "Payment completion time decreased from 6.5s to 3.2s"
+  - name: "Complete Payment Workflow"
+    weight: 70
+    flow:
+      # Step 1: Land on contact information page
+      - get:
+          url: "/contact-information"
+          expect:
+            - statusCode: 200
+          capture:
+            - json: "$.csrfToken"
+              as: "csrfToken"
+          afterResponse: "recordMetric"
+      
+      # Think time: User reads form (2-5 seconds)
+      - think: 3
+      
+      # Step 2: Submit contact information
+      - post:
+          url: "/contact-information"
+          json:
+            firstName: "{{ $randomString() }}"
+            lastName: "{{ $randomString() }}"
+            email: "test-{{ $randomString() }}@example.com"
+            companyName: "Test Company {{ $randomNumber() }}"
+            phoneNumber: "+1-555-{{ $randomNumber(1000, 9999) }}"
+            customerNumber: "CUST{{ $randomNumber(100000, 999999) }}"
+          headers:
+            X-CSRF-TOKEN: "{{ csrfToken }}"
+          expect:
+            - statusCode: [200, 302]
+      
+      # Think time: Page transition
+      - think: 2
+      
+      # Step 3: Load payment information page
+      - get:
+          url: "/payment-information"
+          expect:
+            - statusCode: 200
+      
+      # Step 4: Check customer balance (async, non-blocking)
+      # Research Paper reference: "Asynchronous balance check eliminating 2.3s blocking time"
+      - get:
+          url: "/api/customer-balance/CUST{{ $randomNumber(100000, 999999) }}"
+          expect:
+            - statusCode: [200, 404]
+          afterResponse: "recordBalanceQuery"
+      
+      # Think time: User selects invoices (5-10 seconds)
+      - think: 7
+      
+      # Step 5: Submit payment information
+      - post:
+          url: "/payment-information"
+          json:
+            invoices:
+              - "INV{{ $randomNumber(10000000, 99999999) }}"
+              - "INV{{ $randomNumber(10000000, 99999999) }}"
+            amount: "{{ $randomNumber(10000, 500000) }}"
+            currency: "{{ currencies }}"
+          headers:
+            X-CSRF-TOKEN: "{{ csrfToken }}"
+          expect:
+            - statusCode: [200, 302]
+      
+      # Think time: Page transition
+      - think: 2
+      
+      # Step 6: Load payment details page
+      - get:
+          url: "/payment-details"
+          expect:
+            - statusCode: 200
+          afterResponse: "recordPaymentDetailsLoad"
+      
+      # Think time: User enters payment info in iframe (10-30 seconds)
+      - think: 20
+      
+      # Step 7: Payment confirmation page
+      - get:
+          url: "/payment-confirmation"
+          expect:
+            - statusCode: 200
+
+  # Scenario 2: Session Extension (10% of traffic)
+  # Research Paper reference: "Session timeout issues reduced by 89%"
+  - name: "Session Extension Test"
+    weight: 10
+    flow:
+      # Load initial page
+      - get:
+          url: "/contact-information"
+          expect:
+            - statusCode: 200
+      
+      # User spends time filling form (simulate 20 minutes)
+      - think: 1200
+      
+      # Session extension request (automatic from client)
+      - post:
+          url: "/api/session/extend"
+          expect:
+            - statusCode: 200
+          afterResponse: "recordSessionExtension"
+      
+      # Continue with workflow
+      - think: 5
+      
+      # Verify session still valid
+      - get:
+          url: "/contact-information"
+          expect:
+            - statusCode: 200
+
+  # Scenario 3: API Health Check (5% of traffic)
+  - name: "Health Check Monitoring"
+    weight: 5
+    flow:
+      - get:
+          url: "/api/health"
+          expect:
+            - statusCode: 200
+            - contentType: json
+          afterResponse: "recordHealthCheck"
+
+  # Scenario 4: Customer Impersonation Workflow (5% of traffic)
+  # Research Paper reference: Support agent features (Chapter 3)
+  - name: "Support Agent Impersonation"
+    weight: 5
+    flow:
+      # Agent enables impersonation
+      - post:
+          url: "/contact-information/impersonate"
+          expect:
+            - statusCode: 200
+      
+      # Agent enters customer information
+      - post:
+          url: "/contact-information"
+          json:
+            firstName: "Customer"
+            lastName: "Name"
+            email: "customer@example.com"
+            customerNumber: "CUST{{ $randomNumber(100000, 999999) }}"
+            impersonating: true
+          expect:
+            - statusCode: [200, 302]
+      
+      # Continue normal workflow
+      - get:
+          url: "/payment-information"
+          expect:
+            - statusCode: 200
+
+  # Scenario 5: Error Handling (10% of traffic)
+  # Research Paper reference: "Production errors decreased 67%"
+  - name: "Error Recovery Scenarios"
+    weight: 10
+    flow:
+      # Test invalid data submission
+      - post:
+          url: "/contact-information"
+          json:
+            firstName: ""
+            lastName: ""
+            email: "invalid-email"
+          expect:
+            - statusCode: [400, 422]
+      
+      # Test session timeout
+      - get:
+          url: "/api/session/timeout"
+          expect:
+            - statusCode: 200
+      
+      # Test invalid customer balance query
+      - get:
+          url: "/api/customer-balance/INVALID"
+          expect:
+            - statusCode: [400, 404]
