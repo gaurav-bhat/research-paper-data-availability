@@ -7,10 +7,10 @@ This repository contains the replication artifacts and synthetic datasets for th
 This research presents a Human-in-the-Loop (HITL) framework for migrating a 15-year-old, 85,000-line C# monolith to a cloud-native AdonisJS/TypeScript architecture on Google Cloud Platform (GCP). 
 
 ### Key Empirical Results:
-* [cite_start]**Lifecycle Compression:** 50% reduction in development time[cite: 101, 131].
-* [cite_start]**Performance:** 57% increase in system throughput ($p < 0.001$)[cite: 120, 195].
-* [cite_start]**Stability:** 67% reduction in runtime anomalies[cite: 106, 131].
-* [cite_start]**Efficiency:** 34% reduction in infrastructure overhead[cite: 120, 195].
+* **Lifecycle Compression:** 50% reduction in development time.
+* **Performance:** 57% increase in system throughput ($p < 0.001$).
+* **Stability:** 67% reduction in runtime anomalies.
+* **Efficiency:** 34% reduction in infrastructure overhead.
 
 ---
 
