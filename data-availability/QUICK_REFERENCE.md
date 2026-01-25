@@ -5,8 +5,8 @@ Complete data availability package for the Research Paper **"Modernization of En
 ## 📦 Package Contents
 
 ```
-Research Paper-data-availability/
-├── README.md                                    # Main documentation
+data-availability/
+├── INDEX.md                                    # Data Availability Package - Index
 ├── QUICK_REFERENCE.md                          # This file
 ├── config-templates/                           # Configuration examples
 │   ├── README.md                               # Config documentation
