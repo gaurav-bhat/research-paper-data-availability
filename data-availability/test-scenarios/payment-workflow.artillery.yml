@@ -1,6 +1,6 @@
 # Artillery.io Configuration for Payment Portal Performance Testing
 # Based on: "Modernization of Enterprise Payment Infrastructure: A Case Study on LLM-Assisted Migration of Legacy Distributed Systems"
-# Research Paper reference: Evaluation methodology (Chapter 6)
+# Research Paper reference: Evaluation methodology (Section 3.3)
 #
 # INSTALLATION:
 # npm install -g artillery
@@ -42,7 +42,7 @@ config:
     pool: 50
   
   # Performance thresholds
-  # Research Paper reference: Performance targets (Chapter 5)
+  # Research Paper reference: Performance targets (Section 3.4)
   ensure:
     maxErrorRate: 1  # Less than 1% errors
     p95: 2000        # 95th percentile under 2 seconds
@@ -194,7 +194,7 @@ scenarios:
           afterResponse: "recordHealthCheck"
 
   # Scenario 4: Customer Impersonation Workflow (5% of traffic)
-  # Research Paper reference: Support agent features (Chapter 3)
+  # Research Paper reference: Support agent features (Appendix A)
   - name: "Support Agent Impersonation"
     weight: 5
     flow:

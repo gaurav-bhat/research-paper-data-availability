@@ -13,7 +13,7 @@
  */
 
 /**
- * Statistical parameters from Research Paper (Chapter 6)
+ * Statistical parameters from Research Paper (Appendix B)
  */
 const METRICS = {
   // Page load times

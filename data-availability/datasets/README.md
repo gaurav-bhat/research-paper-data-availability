@@ -44,7 +44,7 @@ Statistical validation showing generated data matches specified parameters.
 
 ## 📊 Dataset Specifications
 
-**Research Paper Reference:** Appendix B - Data Availability Statement
+**Research Paper Reference:** Appendix B - Data Availability
 
 **Size:**
 - **Total rows**: 1,800 measurements
@@ -64,7 +64,7 @@ Statistical validation showing generated data matches specified parameters.
 | api_customer_balance | legacy | 2,300 | 450 | 1,500 | 4,000 |
 | api_customer_balance | modern | 180 | 45 | 95 | 380 |
 
-*See Research Paper Chapter 6 for complete metrics table*
+*See Research Paper Table 2 for complete metrics table*
 
 ## 🎯 Use Cases
 
@@ -333,7 +333,7 @@ When using this dataset in research:
 
 ```bibtex
 @dataset{payment_portal_synthetic_2026,
-  author = {[Your Name]},
+  author = {Gaurav B.},
   title = {Synthetic Performance Dataset: Payment Portal Migration},
   year = {2026},
   note = {Supplementary material for "Modernization of Enterprise Payment Infrastructure: A Case Study on LLM-Assisted Migration of Legacy Distributed Systems"}

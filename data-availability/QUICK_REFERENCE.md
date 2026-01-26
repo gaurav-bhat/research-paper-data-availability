@@ -6,7 +6,7 @@ Complete data availability package for the Research Paper **"Modernization of En
 
 ```
 data-availability/
-├── INDEX.md                                    # Data Availability Package - Index
+├── README.md                                   # Data Availability Package - Index
 ├── QUICK_REFERENCE.md                          # This file
 ├── config-templates/                           # Configuration examples
 │   ├── README.md                               # Config documentation
@@ -233,6 +233,7 @@ df = pd.read_csv('synthetic-performance-data.csv', encoding='utf-8')
 Use this to verify you've obtained all materials:
 
 - [ ] Main README.md with overview
+- [ ] README.md containing Dataset Specifications
 - [ ] Configuration templates (3 files)
   - [ ] env.example
   - [ ] session.config.ts
@@ -245,7 +246,7 @@ Use this to verify you've obtained all materials:
   - [ ] synthetic-performance-data.csv (1,800+ rows)
   - [ ] generate-synthetic-data.js
   - [ ] generation-stats.log
-- [ ] Documentation (4 README files)
+- [ ] Documentation (5 README files)
 
 **Expected file count:** 15 files total
 

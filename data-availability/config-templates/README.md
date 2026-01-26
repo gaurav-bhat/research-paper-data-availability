@@ -41,7 +41,7 @@ TypeScript configuration demonstrating the session management approach.
 - 30-minute session timeout with extension logic
 - Type-safe session data structure
 
-**Research Paper Reference:** Chapter 2 - Session Management Strategy
+**Research Paper Reference:** Section 2.1 - Session Management Strategy
 
 **Usage:**
 ```typescript
@@ -66,7 +66,7 @@ Google Cloud Run service configuration for production deployment.
 - VPC connector integration
 - Secret Manager references
 
-**Research Paper Reference:** Chapter 5 - Cloud Run Deployment Configuration
+**Research Paper Reference:** Appendix A - Cloud Run Deployment Configuration
 
 **Deployment:**
 ```bash
@@ -110,8 +110,8 @@ These templates are designed for:
 
 ## 📖 Related Research Paper Sections
 
-- **Chapter 2**: Planning the Migration (Architecture Decisions)
-- **Chapter 5**: Production Readiness (Security, Performance, Deployment)
+- **Section 2**: Planning the Migration (Architecture Decisions)
+- **Appendix A**: Production Readiness (Security, Performance, Deployment)
 - **Appendix A**: Metrics and Terminology (Environment Leakage definition)
 
 ## 🤝 Customization Guide

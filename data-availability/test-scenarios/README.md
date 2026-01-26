@@ -1,6 +1,6 @@
 # Performance Testing Scripts
 
-This directory contains load testing scripts that replicate the evaluation methodology described in Chapter 6 of the Research Paper.
+This directory contains load testing scripts that replicate the evaluation methodology described in Section 3.3 of the Research Paper.
 
 ## 📋 Files
 
@@ -154,7 +154,7 @@ Summary report @ 14:23:45(-0500)
 
 ### Scenario 1: Complete Payment Workflow (70% weight)
 
-**Research Paper Reference:** "Payment completion time: 6.5s to 3.2s" (Chapter 6)
+**Research Paper Reference:** "Payment completion time: 6.5s to 3.2s" (Table 2)
 
 **Steps:**
 1. Load contact information page
@@ -170,7 +170,7 @@ Summary report @ 14:23:45(-0500)
 
 ### Scenario 2: Session Extension (10% weight)
 
-**Research Paper Reference:** "Session timeout issues reduced by 89%" (Chapter 6)
+**Research Paper Reference:** "Session timeout issues reduced by 89%" (Appendix A)
 
 **Steps:**
 1. Create session by loading page
@@ -182,7 +182,7 @@ Summary report @ 14:23:45(-0500)
 
 ### Scenario 3: Customer Balance Query (Measured separately)
 
-**Research Paper Reference:** "Eliminating 2.3s blocking time" (Chapter 6)
+**Research Paper Reference:** "Eliminating 2.3s blocking time" (Appendix A)
 
 **Comparison:**
 - Legacy: Synchronous query blocking page render (2.3s)
@@ -190,7 +190,7 @@ Summary report @ 14:23:45(-0500)
 
 ### Scenario 4: Support Agent Impersonation (5% weight)
 
-**Research Paper Reference:** "Customer impersonation feature" (Chapter 3)
+**Research Paper Reference:** "Customer impersonation feature" (Appendix A)
 
 **Steps:**
 1. Enable impersonation mode
@@ -201,7 +201,7 @@ Summary report @ 14:23:45(-0500)
 
 ### Scenario 5: Error Handling (10% weight)
 
-**Research Paper Reference:** "Production errors decreased 67%" (Chapter 6)
+**Research Paper Reference:** "Production errors decreased 67%" (Table 2)
 
 **Test Cases:**
 - Invalid form input (validation errors)
@@ -361,7 +361,7 @@ artillery run payment-workflow.artillery.yml \
 ## 📚 Additional Resources
 
 - **Artillery.io Documentation**: https://artillery.io/docs
-- **Research Paper Chapter 6**: Evaluation Methodology
+- **Research Paper Section 3.3**: Evaluation Methodology
 - **Load Testing Best Practices**: See ../README.md
 
 ## ⚖️ License

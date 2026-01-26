@@ -53,7 +53,7 @@ export const sessionConfig: SessionConfig = {
 
 /**
  * Session timeout configuration
- * Research Paper reference: Session extension system (Chapter 3)
+ * Research Paper reference: Session extension system (Appendix A)
  */
 export const sessionTimeoutConfig = {
   // When to show warning modal (25 minutes = 5 minutes before expiry)
@@ -68,7 +68,7 @@ export const sessionTimeoutConfig = {
 
 /**
  * Redis configuration for session storage
- * Research Paper reference: Infrastructure deployment (Chapter 5)
+ * Research Paper reference: Infrastructure deployment (Section 2.2)
  */
 export const redisConfig = {
   host: env.get('REDIS_HOST'),
@@ -89,7 +89,7 @@ export const redisConfig = {
 
 /**
  * Session data structure
- * Research Paper reference: Complex session management (Chapter 3)
+ * Research Paper reference: Complex session management (Section 2)
  */
 export interface SessionData {
   // User information from OIDC authentication

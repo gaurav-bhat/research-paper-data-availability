@@ -86,7 +86,7 @@ print(f"p-value: {p_value}")  # Should be < 0.001
 README.md                    	# This file
 data-availability/
 ├── QUICK_REFERENCE.md          # Quick start guide
-├── INDEX.md                    # Data Availability Package - Index
+├── README.md                    # Data Availability Package - Index
 │
 ├── config-templates/           # Configuration Examples
 │   ├── README.md              	# Detailed config documentation

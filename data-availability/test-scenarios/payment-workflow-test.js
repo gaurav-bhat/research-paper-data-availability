@@ -1,7 +1,7 @@
 /**
  * Performance Testing Script - Payment Portal
  * Based on: "Modernization of Enterprise Payment Infrastructure: A Case Study on LLM-Assisted Migration of Legacy Distributed Systems"
- * Research Paper reference: Evaluation methodology (Chapter 6)
+ * Research Paper reference: Evaluation methodology (Section 3.3)
  * 
  * This script simulates realistic payment workflows for performance testing.
  * Can be used with Artillery.io or run standalone with Node.js.
@@ -50,7 +50,7 @@ export const testConfig = {
 
 /**
  * Test Scenarios
- * Research Paper reference: Payment workflow implementation (Chapter 3)
+ * Research Paper reference: Payment workflow implementation (Section 3)
  */
 export class PaymentWorkflowTest {
   constructor(baseUrl) {
