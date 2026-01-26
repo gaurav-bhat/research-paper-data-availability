@@ -20,7 +20,7 @@ import { faker } from '@faker-js/faker'
 
 /**
  * Test Configuration
- * Research Paper reference: "100 measurements per metric during business hours"
+ * Research Paper reference: "100 measurements per metric during business hours (aggregated across 15 independent load-test cycles)"
  */
 export const testConfig = {
   // Target environment

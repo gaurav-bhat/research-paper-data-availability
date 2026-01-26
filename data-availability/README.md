@@ -37,7 +37,7 @@
 - [ ] **Test Setup**: Google Cloud Run, JMeter 5.5 (Section 3.3)
 - [ ] **Workload**: 50 concurrent users, realistic payment workflows (Section 3.3)
 - [ ] **Metrics**: All metrics defined in 'Table 2' with measurement methods
-- [ ] **Sample Size**: 100 measurements per metric (n=100)
+- [ ] **Sample Size**: 100 measurements per metric (n=100) (aggregated across 15 independent load-test cycles)
 - [ ] **Statistical Tests**: T-tests reported with p-values < 0.001
 
 ### Data Availability Verification
