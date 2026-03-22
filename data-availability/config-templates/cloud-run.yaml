@@ -39,7 +39,7 @@ spec:
         
         # Auto-scaling configuration
         # Research Paper reference: "Minimum instances to handle payment processing latency"
-        autoscaling.knative.dev/minScale: "2"
+        autoscaling.knative.dev/minScale: "1"
         autoscaling.knative.dev/maxScale: "100"
         
         # Startup CPU boost (helps with cold starts)

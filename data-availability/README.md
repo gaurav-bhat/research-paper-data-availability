@@ -43,7 +43,7 @@
 ### Data Availability Verification
 
 - [ ] **Config Templates**: 3 files provided with security notes
-- [ ] **Test Scripts**: 3 files (Artillery.yml + Node.js standalone + processor)
+- [ ] **Test Scripts**: 3 files (Artillery.io reproducibility equivalent of JMeter 5.5 plan + Node.js standalone + processor)
 - [ ] **Synthetic Dataset**: CSV with 1,800 measurements matching statistics
 - [ ] **Documentation**: 5 README files explaining all materials
 - [ ] **Reproducibility**: Generator script provided to recreate dataset

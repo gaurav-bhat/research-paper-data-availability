@@ -122,7 +122,7 @@ print(f"  Significant at α={ALPHA}: {u_p < ALPHA}")
 
 # ── Summary ───────────────────────────────────────────────────────────────────
 print("\n" + "=" * 60)
-print("SUMMARY — values to insert into manuscript (Section 3.3)")
+print("SUMMARY — values used in manuscript (Section 3.3)")
 print("=" * 60)
 print(f"  N per group (after IQR):  {min(n_legacy, n_modern)}")
 print(f"  Outliers removed total:   {n_removed_total}")
