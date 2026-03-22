@@ -212,4 +212,4 @@ Before using in production:
 ---
 
 **License**: MIT License
-**Last Updated**: January 25, 2026
+**Last Updated**: March 22, 2026

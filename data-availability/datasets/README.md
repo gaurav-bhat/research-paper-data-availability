@@ -42,6 +42,61 @@ Script to regenerate synthetic data with same statistical properties.
 ### `generation-stats.log`
 Statistical validation showing generated data matches specified parameters.
 
+### `statistical-analysis.py`
+Full statistical analysis protocol for Section 3.3 of the Research Paper.
+
+**Reproduces:**
+- IQR outlier removal and final N per group
+- Shapiro-Wilk normality test (W statistic + p-value per group)
+- Welch's independent t-test (two-sided, α=0.05) with Welch-Satterthwaite df
+- 95% Confidence Interval on mean latency difference
+- Cohen's d effect size (pooled SD)
+- Mann-Whitney U non-parametric validation
+
+**Usage:** `python3 statistical-analysis.py`
+
+### `statistical-analysis-results.log`
+Pre-computed output from `statistical-analysis.py`. Contains all values
+reported in Section 3.3 and the Table 2 footnote.
+
+### `hitl-telemetry-log.csv`
+Raw module-level HITL workflow observations across the 12 migrated components.
+
+**Structure:**
+```csv
+module_id,module_name,component_type,prompt_cycles,prompts_accepted,
+rollback_count,avg_correction_iterations,validation_time_min,notes
+```
+
+**Columns:**
+- `module_id`: Unique identifier (M01–M12)
+- `module_name`: Migrated component name
+- `component_type`: Architectural layer (api_endpoint, middleware, etc.)
+- `prompt_cycles`: Total LLM prompt iterations for this module
+- `prompts_accepted`: Outputs approved on first human review
+- `rollback_count`: Outputs sent back for revision (`prompt_cycles − prompts_accepted`)
+- `avg_correction_iterations`: Average re-prompt cycles per rollback event (0.0 if no rollbacks)
+- `validation_time_min`: Human review time including security and PCI-DSS checks
+- `notes`: Free-text rationale for rollback decisions
+
+### `hitl-analysis.py`
+Reproduces the HITL workflow telemetry summary reported in the Methods/Discussion
+section and the compact appendix table.
+
+**Reproduces:**
+- Prompt cycles per module: median and IQR
+- Acceptance ratio (prompt-level: accepted / total cycles)
+- Rollback ratio
+- Rollback depth (weighted average of `avg_correction_iterations`)
+- Human validation time: mean and IQR
+
+**Usage:** `python3 hitl-analysis.py`
+
+### `hitl-analysis-results.log`
+Pre-computed output from `hitl-analysis.py`. Contains all values reported in
+the Methods/Discussion paragraph and the compact HITL appendix table. Mirrors
+the role of `statistical-analysis-results.log` for the performance dataset.
+
 ## 📊 Dataset Specifications
 
 **Research Paper Reference:** Appendix B - Data Availability
@@ -342,5 +397,5 @@ When using this dataset in research:
 
 ---
 
-**Last Updated**: January 25, 2026
+**Last Updated**: March 22, 2026
 **Dataset Version**: 1.0.0

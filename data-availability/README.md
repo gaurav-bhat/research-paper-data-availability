@@ -38,15 +38,18 @@
 - [ ] **Workload**: 50 concurrent users, realistic payment workflows (Section 3.3)
 - [ ] **Metrics**: All metrics defined in 'Table 2' with measurement methods
 - [ ] **Sample Size**: 100 measurements per metric (n=100) (aggregated across 15 independent load-test cycles)
-- [ ] **Statistical Tests**: T-tests reported with p-values < 0.001
+- [ ] **Statistical Tests**: Welch's t-test (two-sided α=0.05), Shapiro-Wilk normality check, Cohen's d effect size, Mann-Whitney U non-parametric validation — all p < 0.001 (Section 3.3)
+- [ ] **HITL Telemetry**: Prompt cycles, acceptance ratio, rollback depth, and human validation time across N=12 migrated modules (Methods/Appendix)
 
 ### Data Availability Verification
 
 - [ ] **Config Templates**: 3 files provided with security notes
 - [ ] **Test Scripts**: 3 files (Artillery.io reproducibility equivalent of JMeter 5.5 plan + Node.js standalone + processor)
 - [ ] **Synthetic Dataset**: CSV with 1,800 measurements matching statistics
+- [ ] **Statistical Analysis Scripts**: `statistical-analysis.py` (Section 3.3 full protocol) + `statistical-analysis-results.log`
+- [ ] **HITL Telemetry**: `hitl-telemetry-log.csv` (N=12 modules) + `hitl-analysis.py` + `hitl-analysis-results.log` (reproduces Methods/Appendix table)
 - [ ] **Documentation**: 5 README files explaining all materials
-- [ ] **Reproducibility**: Generator script provided to recreate dataset
+- [ ] **Reproducibility**: Generator and analysis scripts provided to recreate all reported statistics
 
 ### Metrics Operationalization
 
@@ -152,14 +155,15 @@ This package addresses journal requirements:
 ✅ Metrics defined (18 metrics with measurement methods)  
 ✅ Sample size stated (n=100 per metric)  
 ✅ Number of runs documented (100 measurements over 30 days)  
-✅ Statistical approach explained (t-tests, 95% CI, 2σ outlier handling)
+✅ Statistical approach explained (IQR outlier handling, Shapiro-Wilk normality, Welch's t-test, Cohen's d, 95% CI, Mann-Whitney U — see `statistical-analysis.py`)
 
 ### Data Availability (Required)
 ✅ Public materials listed (configs, scripts, synthetic data)  
 ✅ Restricted data explained (production metrics, source code, infrastructure)  
 ✅ Synthetic examples provided (1,800 measurements)  
 ✅ Configurations included (sanitized, documented)  
-✅ Replication materials available (test scripts, data generator)  
+✅ Replication materials available (test scripts, data generator, statistical analysis scripts)
+✅ HITL workflow telemetry provided (N=12 modules, `hitl-telemetry-log.csv` + `hitl-analysis.py`)
 ✅ Access method specified (repository download, on request)
 
 ### Metrics Operationalization (Required)
@@ -180,7 +184,7 @@ This package addresses journal requirements:
 | Page Load Improvement | ~57% | Python pandas calculation |
 | Statistical Significance | p < 0.001 | Scipy t-test |
 | Dataset Row Count | 1,801 rows | `wc -l` command |
-| File Count | 14 files | `find . -type f` |
+| File Count | 20 files | `find . -type f` |
 | Package Size | ~232 KB | `du -sh .` |
 
 **All verifications should pass within ±5% tolerance for statistical values.**

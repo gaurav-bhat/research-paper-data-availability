@@ -1,0 +1,56 @@
+============================================================
+HITL Workflow Telemetry — Module-Level Summary
+============================================================
+
+N modules: 12
+
+Module                              Cycles Accepted Rollbacks Corr.Depth Val.Time
+--------------------------------------------------------------------------------
+health_check_api                         2        2         0        0.0      25m
+csrf_token_handler                       2        2         0        0.0      30m
+payment_confirmation_flow                2        2         0        0.0      30m
+contact_info_page_flow                   2        2         0        0.0      30m
+auth_middleware                          3        3         0        0.0      40m
+payment_info_page_flow                   3        2         1        1.0      45m
+payment_details_page_flow                3        3         0        0.0      45m
+error_handler_middleware                 3        2         1        1.0      50m
+redis_session_store                      4        3         1        1.0      65m
+customer_balance_api                     4        3         1        1.0      65m
+session_manager                          4        3         1        1.0      65m
+pcipal_payment_integration               5        3         2        1.5      70m
+
+── Prompt Cycles per Module ──
+  Median : 3.0
+  Q1     : 2.0
+  Q3     : 4.0
+  IQR    : 2.0 – 4.0
+
+── Acceptance / Rollback Ratio ──
+  Total prompt cycles  : 37
+  Total accepted       : 30
+  Total rolled back    : 7
+  Acceptance ratio     : 81.1%
+  Rollback ratio       : 18.9%
+
+── Rollback Depth ──
+  Modules with at least one rollback : 6
+  Avg correction iterations (weighted): 1.14
+
+── Human Validation Time ──
+  Mean : 46.7 min
+  Q1   : 30.0 min
+  Q3   : 65.0 min
+  IQR  : 30.0 – 65.0 min
+
+============================================================
+APPENDIX TABLE — HITL Workflow Telemetry
+============================================================
+  Metric                                   Value
+  -------------------------------------------------------
+  Prompt Cycles per Module (Median / IQR)  3 (IQR: 2 – 4)
+  Acceptance Ratio                         81.1%
+  Rollback Ratio                           18.9%
+  Rollback Depth (avg correction iterations) 1.1 iterations
+  Human Validation Time (Mean / IQR)       47 min (IQR: 30 – 65)
+  Sample Size                              N = 12 modules
+============================================================

@@ -22,7 +22,12 @@ data-availability/
     ├── README.md                               # Dataset documentation
     ├── generate-synthetic-data.js              # Data generator
     ├── synthetic-performance-data.csv          # Main dataset (1,800+ rows)
-    └── generation-stats.log                    # Statistical validation
+    ├── generation-stats.log                    # Statistical validation log
+    ├── statistical-analysis.py                 # Full Section 3.3 statistical protocol
+    ├── statistical-analysis-results.log        # Computed statistics output
+    ├── hitl-telemetry-log.csv                  # HITL workflow observations (N=12 modules)
+    ├── hitl-analysis.py                        # HITL summary stats (Methods/Appendix)
+    └── hitl-analysis-results.log               # Pre-computed HITL telemetry output
 ```
 
 ## ⚡ Quick Start Commands
@@ -62,14 +67,14 @@ cd datasets
 node generate-synthetic-data.js > synthetic-performance-data.csv
 ```
 
-## 📊 Key Metrics (from Research Paper)
+## 📊 Key Metrics
 
 | Metric | Before | After | Improvement |
 |--------|--------|-------|-------------|
 | **Page Load Time** | 4.2s (σ=0.8s) | 1.8s (σ=0.3s) | **57%** ↓ |
 | **Payment Completion** | 6.5s | 3.2s | **51%** ↓ |
 | **Balance Query** | 2.3s (blocking) | 0.18s (async) | **92%** ↓ |
-| **Error Rate** | 342/week | 113/week | **67%** ↓ |
+| **Runtime Anomaly Rate** | 342 per 7-day window | 113 per 7-day window | **67%** ↓ |
 | **Deployment Time** | 4 hours | 12 minutes | **95%** ↓ |
 
 ## 🎯 Use Cases by Role
@@ -115,17 +120,21 @@ improvement = ((legacy - modern) / legacy) * 100
 print(f"Page load improvement: {improvement:.1f}%")  # Expected: ~57%
 ```
 
-### Run Statistical Significance Test
-```python
-from scipy import stats
-import pandas as pd
-df = pd.read_csv('datasets/synthetic-performance-data.csv')
-metric = df[df['metric_name'] == 'complete_payment_workflow']
-t_stat, p_value = stats.ttest_ind(
-    metric[metric['environment'] == 'legacy']['value'],
-    metric[metric['environment'] == 'modern']['value']
-)
-print(f"Statistically significant: {p_value < 0.001}")  # Expected: True
+### Run Full Statistical Analysis (Section 3.3)
+```bash
+# Runs IQR outlier removal, Shapiro-Wilk, Welch's t-test,
+# 95% CI, Cohen's d, and Mann-Whitney U — all in one script
+cd datasets
+python3 statistical-analysis.py
+# Output also saved to statistical-analysis-results.log
+```
+
+### Reproduce HITL Workflow Telemetry (Methods/Appendix)
+```bash
+cd datasets
+python3 hitl-analysis.py
+# Reproduces: prompt cycles median/IQR, acceptance ratio,
+# rollback depth, and human validation time from N=12 modules
 ```
 
 ### Load Test Your Environment
@@ -242,13 +251,18 @@ Use this to verify you've obtained all materials:
   - [ ] payment-workflow.artillery.yml
   - [ ] payment-workflow-test.js
   - [ ] payment-processor.js
-- [ ] Synthetic dataset (3 files)
+- [ ] Synthetic dataset (7 files)
   - [ ] synthetic-performance-data.csv (1,800+ rows)
   - [ ] generate-synthetic-data.js
   - [ ] generation-stats.log
+  - [ ] statistical-analysis.py
+  - [ ] statistical-analysis-results.log
+  - [ ] hitl-telemetry-log.csv
+  - [ ] hitl-analysis.py
+  - [ ] hitl-analysis-results.log
 - [ ] Documentation (5 README files)
 
-**Expected file count:** 15 files total
+**Expected file count:** 20 files total
 
 ## 📊 Expected Dataset Statistics
 

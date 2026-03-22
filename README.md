@@ -8,7 +8,7 @@ This research presents a Human-in-the-Loop (HITL) framework for migrating a 15-y
 
 ### Key Empirical Results:
 * **Lifecycle Compression:** 50% reduction in development time.
-* **Performance:** 57% increase in system throughput ($p < 0.001$).
+* **Performance:** 57% reduction in response latency (p < 0.001).
 * **Stability:** 67% reduction in runtime anomalies.
 * **Efficiency:** 34% reduction in infrastructure overhead.
 
@@ -19,13 +19,14 @@ This research presents a Human-in-the-Loop (HITL) framework for migrating a 15-y
 This package provides complete supplementary materials for independent validation and reproducibility of the Research Paper's findings.
 
 **Contents:**
-- ✅ 14 files across 3 categories
+- ✅ 20 files across 3 categories
 - ✅ 1,801 rows of synthetic performance data
 - ✅ Full configuration templates (sanitized)
 - ✅ Complete performance testing scripts
+- ✅ Statistical analysis scripts (performance + HITL telemetry)
 - ✅ Comprehensive documentation
 
-**Total Size:** 232 KB
+**Total Size:** ~260 KB
 
 ---
 
@@ -104,7 +105,12 @@ data-availability/
     ├── README.md             	# Dataset documentation
     ├── synthetic-performance-data.csv    # Main dataset (1,801 rows)
     ├── generate-synthetic-data.js        # Data generator script
-    └── generation-stats.log              # Statistical validation
+    ├── generation-stats.log              # Statistical validation log
+    ├── statistical-analysis.py           # Welch's t-test / Cohen's d / Mann-Whitney (Section 3.3)
+    ├── statistical-analysis-results.log  # Computed statistics output
+    ├── hitl-telemetry-log.csv            # HITL workflow observations (N=12 modules)
+    ├── hitl-analysis.py                  # HITL summary stats script (Methods/Appendix)
+    └── hitl-analysis-results.log         # Pre-computed HITL telemetry output
 ```
 
 ## 🔒 Security & Compliance
