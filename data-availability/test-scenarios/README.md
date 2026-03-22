@@ -221,7 +221,7 @@ Summary report @ 14:23:45(-0500)
 | Payment Completion | 6.5s | 3.2s | 51% |
 | Balance Query | 2.3s | 0.18s | 92% |
 | Session Extension | N/A | <0.5s | New feature |
-| Error Rate | 342/week | 113/week | 67% |
+| Runtime Anomaly Rate | 342 per 7-day window | 113 per 7-day window | 67% |
 
 ## 🔧 Customization Guide
 
