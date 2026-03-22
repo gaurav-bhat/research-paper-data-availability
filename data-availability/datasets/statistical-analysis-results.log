@@ -1,0 +1,50 @@
+============================================================
+Metric: complete_payment_workflow
+Raw sample sizes: legacy n=100, modern n=100
+
+── Step 1: IQR Outlier Removal ──
+  Legacy:  100 → 100  (removed 0)
+  Modern:  100 → 100  (removed 0)
+  Total removed: 0
+  Final N per group: legacy=100, modern=100
+
+── Step 2: Shapiro-Wilk Normality Test ──
+  Legacy:  W=0.9800, p=0.1326  (normal)
+  Modern:  W=0.9797, p=0.1260  (normal)
+
+── Step 3: Welch's t-test (two-sided, α=0.05) ──
+  t-statistic: 25.34
+  Degrees of freedom (Welch-Satterthwaite): 139.2
+  p-value: 5.36e-54
+  Significant at α=0.05: True
+
+── Step 4: 95% CI on Mean Difference (legacy − modern) ──
+  Mean difference: 3280.5 ms
+  95% CI: [3024.6, 3536.5] ms
+
+── Step 5: Cohen's d Effect Size ──
+  Legacy mean:  6560.7 ms  (SD=1175.9)
+  Modern mean:  3280.1 ms  (SD=541.8)
+  Pooled SD:    915.5
+  Cohen's d:    3.58  (large > 0.8)
+
+── Step 6: Mann-Whitney U (non-parametric validation) ──
+  U statistic: 10000
+  p-value:     2.56e-34
+  Significant at α=0.05: True
+
+============================================================
+SUMMARY — values to insert into manuscript (Section 3.3)
+============================================================
+  N per group (after IQR):  100
+  Outliers removed total:   0
+  Shapiro-Wilk p (legacy):  0.133
+  Shapiro-Wilk p (modern):  0.126
+  t-statistic:              25.34
+  Welch df:                 139.2
+  p-value (t-test):         5.36e-54
+  95% CI:                   [3024.6, 3536.5] ms
+  Cohen's d:                3.58
+  Mann-Whitney U:           10000
+  Mann-Whitney p:           2.56e-34
+============================================================
