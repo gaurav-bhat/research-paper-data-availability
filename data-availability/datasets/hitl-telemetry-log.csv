@@ -1,0 +1,13 @@
+module_id,module_name,component_type,prompt_cycles,prompts_accepted,rollback_count,avg_correction_iterations,validation_time_min,notes
+M01,health_check_api,api_endpoint,2,2,0,0.0,25,Straightforward mapping of /api/health endpoint; no legacy coupling
+M02,csrf_token_handler,security_middleware,2,2,0,0.0,30,CSRF token extraction adapted from C# anti-forgery filter; direct translation
+M03,payment_confirmation_flow,page_controller,2,2,0,0.0,30,Stateless confirmation page with session read-only access; minimal logic
+M04,contact_info_page_flow,page_controller,2,2,0,0.0,30,Form validation logic translated to AdonisJS validator; accepted first pass
+M05,auth_middleware,security_middleware,3,3,0,0.0,40,Role-based access control re-implemented; extended review for security posture
+M06,payment_info_page_flow,page_controller,3,2,1,1.0,45,Invoice selection edge-case handling required one revision after human review
+M07,payment_details_page_flow,page_controller,3,3,0,0.0,45,Payment iframe proxy to PCI-PAL; stateless design accepted without revision
+M08,error_handler_middleware,middleware,3,2,1,1.0,50,Stack trace exposure flagged in security review; one revision to sanitize output
+M09,redis_session_store,infrastructure,4,3,1,1.0,65,Session key scoping revised to enforce VPC-environment isolation (PCI-DSS)
+M10,customer_balance_api,api_endpoint,4,3,1,1.0,65,Async refactor from blocking C# call; one revision for error propagation path
+M11,session_manager,infrastructure,4,3,1,1.0,65,PCI-DSS session timeout logic revised once for compliance alignment
+M12,pcipal_payment_integration,payment_processor,5,3,2,1.5,70,Complex PCI compliance integration; two rollback-correction cycles required
