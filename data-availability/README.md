@@ -35,7 +35,7 @@
 ### Methodology Verification
 
 - [ ] **Test Setup**: Google Cloud Run, JMeter 5.5 (Section 3.3)
-- [ ] **Workload**: 50 concurrent users, realistic payment workflows (Section 3.3)
+- [ ] **Workload**: 50 concurrent users, 5,000 requests/minute, 30-minute sustained run — Apache JMeter 5.5 (Section 3.3)
 - [ ] **Metrics**: All metrics defined in 'Table 2' with measurement methods
 - [ ] **Sample Size**: 100 measurements per metric (n=100) (aggregated across 10 independent load-test cycles)
 - [ ] **Statistical Tests**: Welch's t-test (two-sided α=0.05), Shapiro-Wilk normality check, Cohen's d effect size, Mann-Whitney U non-parametric validation — all p < 0.001 (Section 3.3)
@@ -151,7 +151,7 @@ This package addresses journal requirements:
 
 ### Evaluation Methodology (Required)
 ✅ Test setup documented (GCP Cloud Run, 2Gi RAM, 1 CPU)  
-✅ Workload specified (50 concurrent users, 30-min duration)  
+✅ Workload specified (50 concurrent users, 5,000 req/min, 30-min duration — JMeter 5.5)
 ✅ Metrics defined (18 metrics with measurement methods)  
 ✅ Sample size stated (n=100 per metric)  
 ✅ Number of runs documented (100 measurements over 30 days)  

@@ -14,7 +14,8 @@ config:
   target: "https://pay-staging.example.com"
   
   # Load phases (simulating realistic traffic patterns)
-  # Research Paper reference: "50 concurrent users with realistic payment workflows"
+  # Research Paper reference: "50 concurrent users, 5,000 requests/minute (JMeter 5.5), 30-minute sustained run"
+  # Note: Artillery phases below are the open-source reproducibility equivalent of that JMeter profile.
   phases:
     # Phase 1: Warm-up (5 minutes)
     - duration: 300
