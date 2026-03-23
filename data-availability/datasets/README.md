@@ -314,6 +314,36 @@ const measurementsPerMetric = 100  // Increase sample size
 const daysInTestPeriod = 30        // Extend test period
 ```
 
+## 🔍 Runtime Anomaly Counting Methodology
+
+**Reference:** Appendix A §1.3 — Measurement and Deduplication Methodology
+
+The runtime anomaly counts reported in Table 2 (342 → 113 events per 7-day window, 67% reduction) were derived from Google Cloud Logging using the following protocol, which must be applied consistently when replicating or comparing results:
+
+### Counting Unit
+Values represent **deduplicated ERROR-level events**, not raw log lines. Only logs with severity `ERROR` or higher (per Google Cloud Logging standards) were included. `WARNING` and `INFO` logs were excluded.
+
+### Deduplication — Retry-Storm Mitigation
+Log entries sharing a unique `correlation_id` or `trace_id` within a **500ms window** were aggregated into a single event. This prevents retry-loops from artificially inflating error counts during a single transaction failure.
+
+**Example:** A database timeout triggering 3 retry attempts within 500ms produces 3 raw log lines but is counted as **1 deduplicated event**.
+
+### Normalization
+Deduplicated event counts were aggregated over a fixed **seven-day rolling time window** to provide a stable operational baseline independent of short-term traffic fluctuations.
+
+### Summary
+| Parameter | Value |
+|---|---|
+| Severity threshold | ERROR and above |
+| Deduplication key | `correlation_id` or `trace_id` |
+| Deduplication window | 500ms |
+| Normalization window | 7-day rolling |
+| Legacy baseline (μ) | 342 events/week |
+| Modern baseline (μ) | 113 events/week |
+| Reduction | 67% |
+
+---
+
 ## 🔍 Data Quality Checks
 
 ### Verify Normal Distribution
