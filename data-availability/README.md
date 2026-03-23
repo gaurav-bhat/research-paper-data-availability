@@ -37,7 +37,7 @@
 - [ ] **Test Setup**: Google Cloud Run, JMeter 5.5 (Section 3.3)
 - [ ] **Workload**: 50 concurrent users, realistic payment workflows (Section 3.3)
 - [ ] **Metrics**: All metrics defined in 'Table 2' with measurement methods
-- [ ] **Sample Size**: 100 measurements per metric (n=100) (aggregated across 15 independent load-test cycles)
+- [ ] **Sample Size**: 100 measurements per metric (n=100) (aggregated across 10 independent load-test cycles)
 - [ ] **Statistical Tests**: Welch's t-test (two-sided α=0.05), Shapiro-Wilk normality check, Cohen's d effect size, Mann-Whitney U non-parametric validation — all p < 0.001 (Section 3.3)
 - [ ] **HITL Telemetry**: Prompt cycles, acceptance ratio, rollback depth, and human validation time across N=12 migrated modules (Methods/Appendix)
 

@@ -60,7 +60,7 @@ Google Cloud Run service configuration for production deployment.
 **Includes:**
 - Primary region configuration (us-central1)
 - Disaster recovery region setup (us-east1)
-- Auto-scaling parameters (min: 2, max: 100)
+- Auto-scaling parameters (min: 1, max: 100)
 - Resource limits (2Gi memory, 1 CPU)
 - Health check probes
 - VPC connector integration
