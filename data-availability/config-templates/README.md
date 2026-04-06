@@ -9,7 +9,7 @@ Complete environment variable template with all configuration options used in pr
 
 **Sections:**
 - Application settings (Node.js, ports, URLs)
-- Session management (timeouts, encryption, Redis)
+- Session management (timeouts, encryption, Redis Standard Tier)
 - Database configuration (primary + read replica)
 - Authentication (OIDC/OAuth integration)
 - Payment processors (Chase Paymentech, PCIPal)
@@ -36,7 +36,7 @@ node -e "require('dotenv').config(); console.log(process.env.SESSION_ENCRYPTION_
 TypeScript configuration demonstrating the session management approach.
 
 **Key Features:**
-- Redis driver for stateless Cloud Run deployment
+- Redis Standard Tier driver for stateless Cloud Run deployment
 - Security best practices (httpOnly, secure, sameSite)
 - 30-minute session timeout with extension logic
 - Type-safe session data structure
@@ -175,9 +175,9 @@ import sessionConfig from './session.config'
    - Check secret name matches exactly (case-sensitive)
 
 2. **Session not persisting**
-   - Verify Redis connection settings
+   - Verify Redis Standard Tier connection settings
    - Check `SESSION_DRIVER=redis` in environment
-   - Ensure Redis instance is accessible from Cloud Run (VPC connector)
+   - Ensure Redis Standard Tier instance is accessible from Cloud Run (VPC connector)
 
 3. **CSRF token errors**
    - Verify `CSRF_ENABLED=true`
@@ -191,7 +191,7 @@ Before using in production:
 - [ ] All `[PLACEHOLDER]` values replaced
 - [ ] Session encryption key generated (32-byte hex)
 - [ ] Database credentials tested and working
-- [ ] Redis connection verified
+- [ ] Redis Standard Tier connection verified
 - [ ] Payment processor API keys validated
 - [ ] OIDC/OAuth configuration tested
 - [ ] Health check endpoints responding

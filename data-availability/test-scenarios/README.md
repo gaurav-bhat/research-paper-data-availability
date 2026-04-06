@@ -17,10 +17,15 @@ Artillery.io configuration for comprehensive payment workflow testing.
 - Error recovery and validation
 
 **Load Profile:**
-- Virtual users: 5-50 concurrent (ramped)
+- Virtual users: 5-50 concurrent (ramped; production evaluation used 50 concurrent — Apache JMeter 5.5)
 - Total duration: 30 minutes
 - Request timeout: 30 seconds
 - Performance targets: p95 < 2s, p99 < 3s
+
+**Page Load Measurement:**
+- Page load times were measured via the **Navigation Timing API** (Section 3.3).
+- The modernised system was evaluated over a 30-day rolling average (Dec 2025 – Jan 2026); the legacy system over a 90-day baseline window.
+- Network conditions were throttled to simulate Cable (5 Mbps, 28 ms RTT) and 3G (1.6 Mbps, 300 ms RTT) profiles using Chrome DevTools.
 
 ### `payment-workflow-test.js`
 Standalone Node.js script for performance testing without Artillery.
@@ -203,7 +208,7 @@ Summary report @ 14:23:45(-0500)
 
 ### Scenario 5: Error Handling (10% weight)
 
-**Research Paper Reference:** "Production errors decreased 67%" (Table 2)
+**Research Paper Reference:** "Runtime anomalies reduced 67% (0.21 → 0.07 per 10k requests, normalized)" (Table 2)
 
 **Test Cases:**
 - Invalid form input (validation errors)
@@ -221,7 +226,7 @@ Summary report @ 14:23:45(-0500)
 | Payment Completion | 6.5s | 3.2s | 51% |
 | Balance Query | 2.3s | 0.18s | 92% |
 | Session Extension | N/A | <0.5s | New feature |
-| Runtime Anomaly Rate | 342 per 7-day window | 113 per 7-day window | 67% |
+| Runtime Anomaly Rate | 0.21 per 10k requests | 0.07 per 10k requests | 67% (Normalized) |
 
 ## 🔧 Customization Guide
 

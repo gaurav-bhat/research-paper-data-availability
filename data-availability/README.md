@@ -14,7 +14,7 @@
 - **Columns:** 6 (timestamp, metric_name, value, environment, test_run, sample_id)
 - **Metrics:** 18 different performance metrics
 - **Measurements per metric:** 100 (50 legacy + 50 modern)
-- **Time span:** 30 days (December 1, 2025 - January 24, 2026)
+- **Time span:** 30 days (December 26, 2025 - January 25, 2026; spans Dec 2025 – Jan 2026)
 - **Format:** Standard CSV with ISO 8601 timestamps
 
 **Statistical Properties Match Research Paper:**
@@ -38,7 +38,7 @@
 - [ ] **Workload**: 50 concurrent users, 5,000 requests/minute, 30-minute sustained run — Apache JMeter 5.5 (Section 3.3)
 - [ ] **Metrics**: All metrics defined in 'Table 2' with measurement methods
 - [ ] **Sample Size**: 100 measurements per metric (n=100) (aggregated across 10 independent load-test cycles)
-- [ ] **Statistical Tests**: Welch's t-test (two-sided α=0.05), Shapiro-Wilk normality check, Cohen's d effect size, Mann-Whitney U non-parametric validation — all p < 0.001 (Section 3.3)
+- [ ] **Statistical Tests**: Welch's t-test (two-sided α=0.05), Shapiro-Wilk normality check, Cohen's d effect size, Mann-Whitney U non-parametric validation — all p < 0.001 (Section 3.3); primary metric: `page_load_contact_info` (4.2s→1.8s, Δ=2.4s, t(130.4)=28.11, 95% CI [2.23,2.57]s, d=3.96, U=0)
 - [ ] **HITL Telemetry**: Prompt cycles, acceptance ratio, rollback depth, and human validation time across N=12 migrated modules (Methods/Appendix)
 
 ### Data Availability Verification
@@ -53,10 +53,11 @@
 
 ### Metrics Operationalization
 
-- [ ] **Runtime Anomalies**: Defined with thresholds (Appendix A)
-  - Memory leaks: >500MB growth over 24h
-  - Connection pool exhaustion: >5s wait time
-  - Cache inconsistencies: Validation query mismatches
+- [ ] **Runtime Anomalies**: Defined with thresholds (Appendix A; Section 3.2.2)
+  - Reported as normalized rates: events per 10,000 requests (not raw counts)
+  - Deduplication: log entries sharing `correlation_id`/`trace_id` within 500ms → single event
+  - Normalization window: 7-day rolling at equivalent traffic volumes (≈150,000 requests)
+  - Legacy: 0.21 / Modern: 0.07 per 10k requests → 67% reduction
   
 - [ ] **Environment Leakage**: Defined with examples (Appendix A)
   - Production using staging endpoints

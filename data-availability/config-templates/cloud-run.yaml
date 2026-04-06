@@ -45,7 +45,11 @@ spec:
         # Startup CPU boost (helps with cold starts)
         run.googleapis.com/startup-cpu-boost: "true"
         
-        # VPC connector for database access
+        # VPC connector for private database and Redis access.
+        # Redis is deployed as VPC-Private Standard Tier (primary + automatic
+        # failover replica) for centralized, persistent session management within
+        # an isolated network — mirroring production-grade enterprise payment
+        # environments (Research Paper Table 1, Session Persistence row).
         run.googleapis.com/vpc-access-connector: projects/[PROJECT_ID]/locations/us-central1/connectors/pay-vpc-connector
         run.googleapis.com/vpc-access-egress: private-ranges-only
         

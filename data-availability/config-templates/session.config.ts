@@ -32,7 +32,7 @@ export interface SessionConfig {
  * - maxAge: 30 minutes for payment sessions (PCI compliance consideration)
  */
 export const sessionConfig: SessionConfig = {
-  // Redis driver for stateless Cloud Run deployment
+  // Redis Standard Tier driver for stateless Cloud Run deployment.
   // Research Paper reference: "Cloud Run's stateless nature required different approach"
   driver: env.get('SESSION_DRIVER', 'redis') as 'redis',
 
@@ -68,7 +68,13 @@ export const sessionTimeoutConfig = {
 
 /**
  * Redis configuration for session storage
- * Research Paper reference: Infrastructure deployment (Section 2.2)
+ * Research Paper reference: Infrastructure deployment (Section 2.2, Table 1)
+ *
+ * Deployment tier: VPC-Private Redis Standard Tier.
+ * The Standard tier was selected to provide automatic failover (primary +
+ * replica), mirroring production-grade enterprise payment environments.
+ * Redis is deployed within the VPC to ensure network isolation; Cloud Run
+ * accesses it exclusively via the VPC connector (see cloud-run.yaml).
  */
 export const redisConfig = {
   host: env.get('REDIS_HOST'),

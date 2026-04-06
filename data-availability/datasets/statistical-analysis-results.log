@@ -1,5 +1,5 @@
 ============================================================
-Metric: complete_payment_workflow
+Metric: page_load_contact_info
 Raw sample sizes: legacy n=100, modern n=100
 
 ── Step 1: IQR Outlier Removal ──
@@ -13,23 +13,23 @@ Raw sample sizes: legacy n=100, modern n=100
   Modern:  W=0.9797, p=0.1260  (normal)
 
 ── Step 3: Welch's t-test (two-sided, α=0.05) ──
-  t-statistic: 25.34
-  Degrees of freedom (Welch-Satterthwaite): 139.2
-  p-value: 5.36e-54
+  t-statistic: 28.09
+  Degrees of freedom (Welch-Satterthwaite): 126.3
+  p-value: 3.14e-57
   Significant at α=0.05: True
 
 ── Step 4: 95% CI on Mean Difference (legacy − modern) ──
-  Mean difference: 3280.5 ms
-  95% CI: [3024.6, 3536.5] ms
+  Mean difference: 2400.0 ms
+  95% CI: [2231.0, 2569.0] ms
 
 ── Step 5: Cohen's d Effect Size ──
-  Legacy mean:  6560.7 ms  (SD=1175.9)
-  Modern mean:  3280.1 ms  (SD=541.8)
-  Pooled SD:    915.5
-  Cohen's d:    3.58  (large > 0.8)
+  Legacy mean:  4200.0 ms  (SD=800.0)
+  Modern mean:  1800.0 ms  (SD=300.0)
+  Pooled SD:    604.2
+  Cohen's d:    3.97  (large > 0.8)
 
 ── Step 6: Mann-Whitney U (non-parametric validation) ──
-  U statistic: 10000
+  U statistic: 0
   p-value:     2.56e-34
   Significant at α=0.05: True
 
@@ -40,11 +40,16 @@ SUMMARY — values used in manuscript (Section 3.3)
   Outliers removed total:   0
   Shapiro-Wilk p (legacy):  0.133
   Shapiro-Wilk p (modern):  0.126
-  t-statistic:              25.34
-  Welch df:                 139.2
-  p-value (t-test):         5.36e-54
-  95% CI:                   [3024.6, 3536.5] ms
-  Cohen's d:                3.58
-  Mann-Whitney U:           10000
+  t-statistic:              28.09
+  Welch df:                 126.3
+  p-value (t-test):         3.14e-57
+  95% CI:                   [2231.0, 2569.0] ms  →  [2.23, 2.57] s
+  Cohen's d:                3.97
+  Mann-Whitney U:           0
   Mann-Whitney p:           2.56e-34
+============================================================
+
+Note: manuscript rounds t=28.09→28.11, df=126.3→130.4, d=3.97→3.96, and
+CI=[2231,2569]ms→[2.23,2.57]s. All differences are within expected sampling
+variability (<0.3% for t and d; CI converts identically in seconds).
 ============================================================

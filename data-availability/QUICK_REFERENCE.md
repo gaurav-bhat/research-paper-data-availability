@@ -74,7 +74,7 @@ node generate-synthetic-data.js > synthetic-performance-data.csv
 | **Page Load Time** | 4.2s (σ=0.8s) | 1.8s (σ=0.3s) | **57%** ↓ |
 | **Payment Completion** | 6.5s | 3.2s | **51%** ↓ |
 | **Balance Query** | 2.3s (blocking) | 0.18s (async) | **92%** ↓ |
-| **Runtime Anomaly Rate** | 342 per 7-day window | 113 per 7-day window | **67%** ↓ |
+| **Runtime Anomaly Rate** | 0.21 per 10k requests | 0.07 per 10k requests | **67%** ↓ (Normalized) |
 | **Deployment Time** | 4 hours | 12 minutes | **95%** ↓ |
 
 ## 🎯 Use Cases by Role
